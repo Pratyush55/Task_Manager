@@ -3,7 +3,7 @@ const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('cors');
 const tasksRouter = require('./routes/task');
-const signup = require('./routes/auth')
+const signupRouter = require('./routes/auth');
 
 // Load environment variables
 require('dotenv').config();
@@ -17,9 +17,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Routes
-app.use('/api/task', tasksRouter);
-app.use('/api/auth', signup)
 
 const admin = require('firebase-admin');
 const serviceAccount = require('./firebase.json');
@@ -28,6 +25,12 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: 'https://task-management-7f438.firebaseio.com'
 });
+
+
+// Routes
+app.use('/api/task', tasksRouter);
+app.use('/api/auth', signupRouter);
+
 
 // Start server
 const PORT = process.env.PORT || 5000;
