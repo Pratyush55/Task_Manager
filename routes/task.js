@@ -1,9 +1,9 @@
-// routes/tasks.js
+
 const express = require('express');
 const router = express.Router();
 const taskController = require('../controllers/taskController');
 
-// Task routes
+
 router.post('/', taskController.createTask);
 router.get('/:uid', taskController.getAllTasks);
 router.put('/:id', taskController.updateTask);

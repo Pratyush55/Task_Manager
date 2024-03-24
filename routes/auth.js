@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const admin = require('firebase-admin');
-// const fetch = require('node-fetch');
 
-// Signup endpoint
+
+
 router.post('/signup', async (req, res) => {
   const { email, password, displayName } = req.body;
   console.log('display...', displayName)
@@ -21,7 +21,7 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-// Login endpoint
+
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
   

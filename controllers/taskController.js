@@ -1,9 +1,8 @@
-// controllers/taskController.js
+
 const Task = require('../models/task');
 
-// Controller methods for CRUD operations
+
 const taskController = {
-  // Create a new task
   createTask: async (req, res) => {
     try {
         console.log("Reached")
@@ -17,17 +16,15 @@ const taskController = {
     }
   },
 
-  // Retrieve all tasks
+
   getAllTasks: async (req, res) => {
     try {
         
-        const { uid } = req.params; // Assuming UID is passed as a query parameter
+        const { uid } = req.params; 
         let tasks;
         if (uid) {
-          // If UID is provided, filter tasks by UID
           tasks = await Task.find({ uid });
         } else {
-          // If UID is not provided, retrieve all tasks
           tasks = await Task.find();
         }
       res.json(tasks);
@@ -37,12 +34,12 @@ const taskController = {
     }
   },
 
-  // Update a task by ID
+
   updateTask: async (req, res) => {
     try {
       const { id } = req.params;
-      const { title, description, status } = req.body;
-      const updatedTask = await Task.findByIdAndUpdate(id, { title, description, status }, { new: true });
+      const { status } = req.body;
+      const updatedTask = await Task.findByIdAndUpdate(id, {status }, { new: true });
       res.json(updatedTask);
     } catch (error) {
       console.error('Error updating task:', error);
@@ -50,7 +47,7 @@ const taskController = {
     }
   },
 
-  // Delete a task by ID
+
   deleteTask: async (req, res) => {
     try {
       const { id } = req.params;
