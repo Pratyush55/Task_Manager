@@ -5,13 +5,14 @@ const admin = require('firebase-admin');
 
 // Signup endpoint
 router.post('/signup', async (req, res) => {
-  const { email, password } = req.body;
-  
+  const { email, password, displayName } = req.body;
+  console.log('display...', displayName)
   try {
     console.log("lets go")
     const userRecord = await admin.auth().createUser({
       email,
       password,
+      displayName,
     });
     res.status(201).json(userRecord);
   } catch (error) {
@@ -38,9 +39,10 @@ router.post('/login', async (req, res) => {
       });
   
       const data = await response.json();
+      console.log('data...',data)
   
       if (response.ok) {
-        res.status(200).json({ success: true, uid: data.localId });
+        res.status(200).json({ success: true, uid: data.localId, email: data.email, name:data.displayName });
       } else {
         console.error('Error logging in:', data.error);
         res.status(500).json({ error: 'Error logging in' });

@@ -7,8 +7,8 @@ const taskController = {
   createTask: async (req, res) => {
     try {
         console.log("Reached")
-      const { title, description, status } = req.body;
-      const newTask = new Task({ title, description, status });
+      const { title, description, status, uid} = req.body;
+      const newTask = new Task({ title, description, status, uid });
       const savedTask = await newTask.save();
       res.status(201).json(savedTask);
     } catch (error) {
@@ -20,7 +20,16 @@ const taskController = {
   // Retrieve all tasks
   getAllTasks: async (req, res) => {
     try {
-      const tasks = await Task.find();
+        
+        const { uid } = req.params; // Assuming UID is passed as a query parameter
+        let tasks;
+        if (uid) {
+          // If UID is provided, filter tasks by UID
+          tasks = await Task.find({ uid });
+        } else {
+          // If UID is not provided, retrieve all tasks
+          tasks = await Task.find();
+        }
       res.json(tasks);
     } catch (error) {
       console.error('Error retrieving tasks:', error);
